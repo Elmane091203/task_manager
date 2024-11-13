@@ -22,13 +22,30 @@ class _ModifTacheState extends State<ModifTache> {
   }
 
   void _modifTache() {
-    Navigator.pop(
-      context,
-      {
-        'titre': _titreController.text,
-        'description': _descriptionController.text,
-      },
-    );
+    if (!(_titreController.text.isEmpty ||
+        _descriptionController.text.isEmpty ||
+        _descriptionController.text == "" ||
+        _titreController.text == "")) {
+      Navigator.pop(
+        context,
+        {
+          'titre': _titreController.text,
+          'description': _descriptionController.text,
+        },
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          width: 300,
+          backgroundColor: Theme.of(context).colorScheme.error,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: const Text("Veuillez remplir tous les champs!"),
+        ),
+      );
+    }
   }
 
   @override
