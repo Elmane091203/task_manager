@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/acceuil.dart';
+import 'package:task_manager/ajout_taches.dart';
 import 'package:task_manager/liste_tache.dart';
 import 'package:task_manager/login.dart';
 import 'package:task_manager/register.dart';

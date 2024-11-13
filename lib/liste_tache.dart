@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/ajout_taches.dart';
+import 'package:task_manager/modif_tache.dart';
 
 class ListeDesTaches extends StatefulWidget {
   @override
@@ -6,43 +8,65 @@ class ListeDesTaches extends StatefulWidget {
 }
 
 class _ListeDesTachesState extends State<ListeDesTaches> {
-  List<Map<String, String>> tasks = [];
+  List<Map<String, String>> taches = [];
 
-  void _addTask(String title, String description) {
+  void _ajoutTache(String titre, String description) {
     setState(() {
-      tasks.add({'titre': title, 'description': description});
+      taches.add({'titre': titre, 'description': description});
     });
   }
 
-  void _deleteTask(int index) {
+  void _supprimerTache(int index) {
     setState(() {
-      tasks.removeAt(index);
+      taches.removeAt(index);
+    });
+  }
+
+  void _modifTache(int index, String titre, String description) {
+    setState(() {
+      taches[index] = {'titre': titre, 'description': description};
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Liste des tâches")),
+      appBar: AppBar(
+        title: Text("Liste des tâches"),
+        elevation: 0,
+        backgroundColor: Theme.of(context).secondaryHeaderColor,
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
       body: ListView.builder(
-        itemCount: tasks.length,
+        itemCount: taches.length,
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              title: Text(tasks[index]['title'] ?? ""),
-              subtitle: Text(tasks[index]['description'] ?? ""),
+              title: Text(taches[index]['titre'] ?? ""),
+              subtitle: Text(taches[index]['description'] ?? ""),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () {
-                      // Logic de modification
+                    onPressed: () async {
+                      final tacheModif = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ModifTache(
+                            tache: taches[index],
+                          ),
+                        ),
+                      );
+                      if (tacheModif != Null) {
+                        _modifTache(index, tacheModif['titre'],
+                            tacheModif['description']);
+                      }
                     },
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () => _deleteTask(index),
+                    onPressed: () => _supprimerTache(index),
                   ),
                 ],
               ),
@@ -51,7 +75,13 @@ class _ListeDesTachesState extends State<ListeDesTaches> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AjoutTache(onSave: _ajoutTache)),
+          );
+        },
         child: Icon(Icons.add),
       ),
     );

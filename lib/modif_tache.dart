@@ -1,41 +1,53 @@
 import 'package:flutter/material.dart';
 
-class AjoutTache extends StatefulWidget {
-  final Function(String, String) onSave;
+class ModifTache extends StatefulWidget {
+  final Map<String, String> tache;
 
-  AjoutTache({required this.onSave});
+  ModifTache({required this.tache});
 
   @override
-  _AjoutTacheState createState() => _AjoutTacheState();
+  _ModifTacheState createState() => _ModifTacheState();
 }
 
-class _AjoutTacheState extends State<AjoutTache> {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
+class _ModifTacheState extends State<ModifTache> {
+  late TextEditingController _titreController;
+  late TextEditingController _descriptionController;
 
-  void _ajoutTache() {
-    widget.onSave(_titleController.text, _descriptionController.text);
-    Navigator.pop(context);
+  @override
+  void initState() {
+    super.initState();
+    _titreController = TextEditingController(text: widget.tache['titre']);
+    _descriptionController =
+        TextEditingController(text: widget.tache['description']);
+  }
+
+  void _modifTache() {
+    Navigator.pop(
+      context,
+      {
+        'titre': _titreController.text,
+        'description': _descriptionController.text,
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajouter une tâche"),
+        title: Text("Modifier la tâche"),
         elevation: 0,
         backgroundColor: Theme.of(context).secondaryHeaderColor,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
               height: 50,
             ),
             TextField(
-              controller: _titleController,
+              controller: _titreController,
               decoration: InputDecoration(
                 labelText: "Titre",
                 border: OutlineInputBorder(
@@ -46,8 +58,8 @@ class _AjoutTacheState extends State<AjoutTache> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 20,
             ),
             TextField(
               controller: _descriptionController,
@@ -65,7 +77,7 @@ class _AjoutTacheState extends State<AjoutTache> {
               height: 50,
             ),
             ElevatedButton(
-              onPressed: _ajoutTache,
+              onPressed: _modifTache,
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(60),
                 shape: RoundedRectangleBorder(

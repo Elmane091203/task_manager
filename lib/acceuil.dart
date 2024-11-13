@@ -4,7 +4,6 @@ import 'package:task_manager/app_routes.dart';
 class Acceuil extends StatelessWidget {
   Acceuil({super.key});
 
-//Modif
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +20,15 @@ class Acceuil extends StatelessWidget {
                 border: Border.all(color: Colors.white30),
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.initialRoute);
+                },
                 icon: const Icon(Icons.logout_rounded),
               ),
             ),
           )
         ],
+        automaticallyImplyLeading: false,
       ),
       backgroundColor: Theme.of(context).primaryColor,
       body: Center(
