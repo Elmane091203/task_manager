@@ -15,13 +15,13 @@ class MyApp extends StatelessWidget {
       title: 'Gestion de tache',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 195, 181, 219)),
+            seedColor: const Color.fromARGB(255, 0, 0, 0)),
         useMaterial3: true,
-        primaryColor: Color.fromARGB(136, 112, 141, 236),
-        secondaryHeaderColor: Color.fromARGB(255, 195, 181, 219),
+        primaryColor: const Color.fromARGB(136, 112, 141, 236),
+        secondaryHeaderColor: const Color.fromARGB(255, 195, 181, 219),
         textTheme: const TextTheme(
           bodyMedium: TextStyle(
-            color: Colors.white,
+            color: Color.fromARGB(255, 10, 10, 10),
             fontSize: 16,
             fontWeight: FontWeight.normal,
             fontFamily: "Times New Roman",
